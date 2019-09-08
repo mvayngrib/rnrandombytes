@@ -8,27 +8,13 @@
 
 import React, {Fragment} from 'react'
 import {StyleSheet, View, Text, NativeModules} from 'react-native'
-import base64 from 'base64-js'
-
-const {RNRandomBytes} = NativeModules
+import {randomBytes} from 'react-native-randombytes'
 
 const App = () => {
-  const [error, setError] = React.useState(null)
-  const [bytes, setBytes] = React.useState(null)
-  React.useEffect(() => {
-    RNRandomBytes.randomBytes(32, (err, bytes) => {
-      if (err) {
-        setError(err)
-      } else {
-        setBytes(base64.toByteArray(bytes).join(','))
-      }
-    })
-  }, [])
-
+  const bytes = randomBytes(32)
   return (
     <View style={styles.container}>
-      {error && <Text>{error.message}</Text>}
-      {bytes && <Text>random bytes: {bytes}</Text>}
+      <Text>random bytes: {bytes}</Text>
     </View>
   )
 }
